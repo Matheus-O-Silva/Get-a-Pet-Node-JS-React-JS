@@ -130,14 +130,14 @@ module.exports = class UserController {
 
         // validations
         if (!name) {
-            res.status(422).json({ message: 'O nome é obrigatório!' });
+            res.status(422).json({ message: 'The field name is required' });
             return;
         }
 
         user.name = name;
 
         if (!email) {
-            res.status(422).json({ message: 'O e-mail é obrigatório!' });
+            res.status(422).json({ message: 'The field email is required' });
             return
         }
 
@@ -145,14 +145,14 @@ module.exports = class UserController {
         const userExists = await User.findOne({ email: email });
 
         if (user.email !== email && userExists) {
-            res.status(422).json({ message: 'Por favor, utilize outro e-mail!' });
+            res.status(422).json({ message: 'please, use other email' });
             return;
         }
 
         user.email = email;
 
         if (!phone) {
-            res.status(422).json({ message: 'O telefone é obrigatório!' });
+            res.status(422).json({ message: 'The field phone is required' });
             return
         }
 
@@ -160,7 +160,7 @@ module.exports = class UserController {
 
         // check if password match
         if (password != confirmpassword) {
-            res.status(422).json({ error: 'As senhas não conferem.' });
+            res.status(422).json({ error: "Passwords doesn't match" });
 
             // change password
         } else if (password == confirmpassword && password != null) {
@@ -176,14 +176,16 @@ module.exports = class UserController {
         try {
             // returns updated data
             const updatedUser = await User.findOneAndUpdate(
-            { _id: user._id },
-            { $set: user },
-            { new: true },
+                { _id: user._id },
+                { $set: user },
+                { new: true },
             )
+
             res.json({
-            message: 'User updated with success',
-            data: updatedUser,
-            })
+                message: 'User updated with success',
+                data: updatedUser,
+            });
+
         } catch (error) {
             res.status(500).json({ message: error })
         }
