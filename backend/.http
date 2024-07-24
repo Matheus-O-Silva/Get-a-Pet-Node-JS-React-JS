@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "name"            : "Matheus",
-  "email"           : "matheus@vai.com",
+  "email"           : "john@vaiww.com",
   "phone"           : "2188888888",
   "password"        : "test123",
   "confirmpassword" : "test123"
@@ -11,9 +11,10 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:5000
+POST http://localhost:5000/users/login
 Content-Type: application/json
 
 {
-  
+  "email"           : "john@vai.com",
+  "password"        : "test123",
 }

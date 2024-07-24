@@ -1,7 +1,11 @@
 const User = require('../models/User');
 
 const bcrypt = require('bcrypt');
-const createUserToken = require('../helpers/create-user-token')
+const jwt = require('jsonwebtoken');
+
+//Helpers
+const createUserToken = require('../helpers/create-user-token');
+const getToken = require('../helpers/get-token');
 
 module.exports = class UserController {
     static async register(req, res) {
@@ -41,15 +45,61 @@ module.exports = class UserController {
             password: passwordHash
         });
 
-        const newUser = await user.save();
-        await createUserToken(newUser, req, res);
+        try{
+            const newUser = await user.save();
+            await createUserToken(newUser, req, res);
+        } catch(err){
+            res.status(500).json({message: err});
+        }
+    }
 
-        // try{
-        //     const newUser = await user.save();
-        //     await createUserToken(newUser, req, res);
+    static async login(req, res) {
+        const {email, password} = req.body;
 
-        // } catch(err){
-        //     res.status(500).json({message: err});
-        // }
+        const requiredFields = ['email','password'];
+
+        //Validations
+        const missingField = requiredFields.find(field => !req.body[field]);
+        if (missingField) {
+            return res.status(422).json({ message: `The field ${missingField} is required` });
+        }
+
+        //check if user exists
+        const user = await User.findOne({email:  email})
+        if(!user){
+            res.status(422).json({
+                message: "user or password incorrects"
+            });
+            return;
+        }
+
+        //check if password matchs with db password
+        const checkPassword = await bcrypt.compare(password, user.password);
+
+        if(!checkPassword){
+            res.status(422).json({
+                message: "Wrong Password",
+            });
+            return;
+        }
+
+        await createUserToken(user, req, res);
+    }
+
+    static async checkUser(req, res){
+        let currentUser = null;
+
+        if(req.headers.authorization){
+            const token   = getToken(req);
+            const decoded = jwt.verify(token, 'secret');
+
+            currentUser   = await User.findById(decoded.id);
+
+            currentUser.password   = null;
+
+            return res.status(200).send(currentUser);
+        }
+
+        res.status(200).send(currentUser);
     }
 }
