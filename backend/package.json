@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "nodemon ./index.ts localhost 5000"
+    "start": "nodemon ./index.js localhost 5000"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
