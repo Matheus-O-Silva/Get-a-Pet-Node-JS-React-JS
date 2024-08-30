@@ -5,6 +5,6 @@ async function main(){
     console.log('conected in mongoose')
 }
 
-main().catch((err) => console.log(err));
+main().catch((err) => console.log('erro ao conectar: ' + err));
 
 module.exports = mongoose;

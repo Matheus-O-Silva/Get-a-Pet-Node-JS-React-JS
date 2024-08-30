@@ -2,7 +2,11 @@ POST http://localhost:5000/users/register
 Content-Type: application/json
 
 {
-  
+  "name"            : "Matheus",
+  "email"           : "matheus@test.com",
+  "phone"           : "2188888888",
+  "password"        : "test123",
+  "confirmpassword" : "test123"
 }
 
 ###
