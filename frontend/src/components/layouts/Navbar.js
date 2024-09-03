@@ -1,16 +1,14 @@
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import { useContext } from 'react';
-
 import Logo from '../../assets/img/logo.png'
 import styles from './Navbar.module.css'
 
 /* Context */
 import { Context } from '../../context/UserContext';
 
-
 function Navbar() {
+    const { authenticated, logout } = useContext(Context);
 
-    const { authenticated, logout } = useContext(Context)
     return (
         <nav className={styles.navbar}>
             <div className={styles.navbar_logo}>
@@ -34,7 +32,7 @@ function Navbar() {
                 )}
             </ul>
         </nav>
-    )
+    );
 }
 
 export default Navbar;

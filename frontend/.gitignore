@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/mongodb-compass_1.43.5_amd64.deb
 /.pnp
 .pnp.js
 

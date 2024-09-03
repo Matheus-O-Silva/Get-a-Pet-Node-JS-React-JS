@@ -4,22 +4,22 @@ import bus from '../../utils/bus';
 import styles from './Message.module.css';
 
 function Message() {
-    const [visibility, setVisibility] = useState(false)
-    const [message, setMessage] = useState('')
-    const [type, setType] = useState("")
+    const [visibility, setVisibility] = useState(false);
+    const [message, setMessage] = useState('');
+    const [type, setType] = useState("");
 
     useEffect(() => {
         bus.addListener('flash', ({ message, type }) => {
 
-            setVisibility(true)
-            setMessage(message)
-            setType(type)
+            setVisibility(true);
+            setMessage(message);
+            setType(type);
 
             setTimeout(() => {
-                setVisibility(false)
-            }, 3000)
+                setVisibility(false);
+            }, 3000);
         })
-    }, [])
+    }, []);
 
     return (
         visibility && (
