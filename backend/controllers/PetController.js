@@ -17,6 +17,18 @@ module.exports = class PetController {
         const images = req.files
         const available = true
 
+        // Array com os nomes das imagens
+    const imageNames = [
+        "172537207666259.png",
+        "172548581405529.png"
+    ];
+
+    // Função para retornar um nome de imagem aleatório
+    const getRandomImageName = () => {
+        const randomIndex = Math.floor(Math.random() * imageNames.length);
+        return imageNames[randomIndex];
+    };
+
         // validations
         if (!name) {
             res.status(422).json({ message: 'The field name is required' })
@@ -62,11 +74,16 @@ module.exports = class PetController {
                 image: user.image,
                 phone: user.phone,
             },
-        })
+        });
 
+        /*
         images.map((image) => {
             pet.images.push(image.filename)
         })
+        */
+
+        const randomImageName = getRandomImageName();
+        pet.images.push(randomImageName);
 
         try {
             const newPet = await pet.save()
