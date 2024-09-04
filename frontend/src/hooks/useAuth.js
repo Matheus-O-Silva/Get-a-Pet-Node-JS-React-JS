@@ -1,7 +1,6 @@
 import api from "../utils/api";
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { userHistory } from 'react-router-dom';
 import useFlashMessage from "./useFlashMessage";
 
 export default function useAuth(){
@@ -46,7 +45,7 @@ export default function useAuth(){
         try {
             const data = await api.post('/users/login', user).then((response) => {
                 return response.data;
-            })
+            });
 
             await authUser(data);
         } catch (error) {

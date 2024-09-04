@@ -45,7 +45,7 @@ function Login() {
             Não tem conta? <Link to="/register">Clique aqui.</Link>
         </p>
     </section>
-    )
+    );
 }
 
 export default Login;
