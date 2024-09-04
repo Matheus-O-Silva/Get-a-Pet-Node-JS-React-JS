@@ -13,6 +13,12 @@ router.post(
     PetController.create,
 );
 
+router.get('/test-api', () => {
+    res.status(200).json({
+        message: "it's alive!"
+    });
+});
+
 router.get('/', PetController.getAll);
 router.get('/mypets', verifyToken, PetController.getAllUserPets);
 router.get('/myadoptions', verifyToken, PetController.getAllUserAdoptions);
